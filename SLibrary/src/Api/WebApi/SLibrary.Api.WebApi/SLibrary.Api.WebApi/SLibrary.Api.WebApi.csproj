@@ -14,4 +14,9 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\SLibrary.Application\SLibrary.Application\SLibrary.Application.csproj" />
+    <ProjectReference Include="..\..\..\Infrastructure\SLibrary.Infrastructure.Persistence\SLibrary.Infrastructure.Persistence\SLibrary.Infrastructure.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>
