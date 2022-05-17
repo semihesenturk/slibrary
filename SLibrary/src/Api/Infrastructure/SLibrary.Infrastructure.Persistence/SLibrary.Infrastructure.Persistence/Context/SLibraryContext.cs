@@ -27,7 +27,7 @@ public class SLibraryContext : DbContext
         //For Design Time Operations! For Example Migrations.
         if (!optionsBuilder.IsConfigured)
         {
-            var connStr = "Data Source=127.0.0.1; Initial Catalog=sozlukdb; Persist Security Info=True; User ID=sa; Password=1Secure*Password1";
+            var connStr = "Data Source=127.0.0.1; Initial Catalog=slibrary; Persist Security Info=True; User ID=sa; Password=1Secure*Password1";
             optionsBuilder.UseSqlServer(connStr, opt =>
             {
                 opt.EnableRetryOnFailure();

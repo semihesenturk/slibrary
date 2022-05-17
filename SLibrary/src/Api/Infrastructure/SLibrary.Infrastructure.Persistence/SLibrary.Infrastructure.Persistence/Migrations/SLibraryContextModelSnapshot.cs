@@ -29,6 +29,7 @@ namespace SLibrary.Infrastructure.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ISBN")
@@ -42,9 +43,6 @@ namespace SLibrary.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ReservatedPersonId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -52,11 +50,14 @@ namespace SLibrary.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ReservatedPersonId");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("Books");
+                    b.ToTable("book", "dbo");
                 });
 
             modelBuilder.Entity("SLibrary.Api.Domain.Models.User", b =>
@@ -81,8 +82,8 @@ namespace SLibrary.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NationalId")
-                        .HasColumnType("int");
+                    b.Property<long>("NationalId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -91,13 +92,16 @@ namespace SLibrary.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("SLibrary.Api.Domain.Models.Book", b =>
                 {
-                    b.HasOne("SLibrary.Api.Domain.Models.User", "ReservatedPerson")
-                        .WithMany()
-                        .HasForeignKey("ReservatedPersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("SLibrary.Api.Domain.Models.User", "User")
+                        .WithMany("Books")
+                        .HasForeignKey("UserId");
 
-                    b.Navigation("ReservatedPerson");
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SLibrary.Api.Domain.Models.User", b =>
+                {
+                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }

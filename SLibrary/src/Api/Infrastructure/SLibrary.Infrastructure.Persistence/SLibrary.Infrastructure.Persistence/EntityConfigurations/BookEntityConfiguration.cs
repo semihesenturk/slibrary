@@ -4,16 +4,16 @@ using SLibrary.Api.Domain.Models;
 using SLibrary.Infrastructure.Persistence.Context;
 
 namespace SLibrary.Infrastructure.Persistence.EntityConfigurations;
-public class UserEntityConfiguration : BaseEntityConfiguration<User>
+public class BookEntityConfiguration : BaseEntityConfiguration<Book>
 {
-    public override void Configure(EntityTypeBuilder<User> builder)
+    public override void Configure(EntityTypeBuilder<Book> builder)
     {
         base.Configure(builder);
 
-        builder.ToTable("user", SLibraryContext.DEFAULT_SCHEMA);
+        builder.ToTable("book", SLibraryContext.DEFAULT_SCHEMA);
 
 
-        builder.HasMany(c => c.Books)
-       .WithOne(e => e.User);
+      
     }
 }
+

@@ -1,8 +1,9 @@
 ﻿using SLibrary.Common.Enums;
 
-namespace SLibrary.Api.Domain.Models;
-public class Book : BaseEntity
+namespace SLibrary.Common.Models.ViewModels;
+public class BookViewModel
 {
+    public Guid Id { get; set; }
     public string Title { get; set; }
 
     public string ISBN { get; set; }
@@ -12,9 +13,5 @@ public class Book : BaseEntity
     public decimal Price { get; set; }
 
     public BookStatusEnum Status { get; set; }
-
-   // public Guid? UserId { get; set; }
-
-    public User? User { get; set; }
 }
 

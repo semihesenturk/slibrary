@@ -13,12 +13,15 @@ public static class Registration
         services.AddDbContext<SLibraryContext>(
             conf =>
             {
-                var connStr = configuration["SozlukDbConnectionString"].ToString();
+                var connStr = configuration["SLibraryDbConnectionString"].ToString();
                 conf.UseSqlServer(connStr, opt =>
                 {
                     opt.EnableRetryOnFailure();
                 });
             });
+
+        var seedData = new SeedData();
+        seedData.SeedAsync(configuration).GetAwaiter().GetResult();
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IBookRepository, BookRepository>();

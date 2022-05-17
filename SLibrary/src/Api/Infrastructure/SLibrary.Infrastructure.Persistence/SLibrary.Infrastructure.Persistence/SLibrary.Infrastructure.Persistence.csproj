@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -19,5 +19,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Core\SLibrary.Api.Domain\SLibrary.Api.Domain\SLibrary.Api.Domain.csproj" />
     <ProjectReference Include="..\..\..\Core\SLibrary.Application\SLibrary.Application\SLibrary.Application.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>
