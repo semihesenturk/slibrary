@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SLibrary.Application.Interfaces.Repositories;
+using SLibrary.Common.Models.RequestModels;
 using SLibrary.Common.Models.ViewModels;
 using System.Net;
 
@@ -19,11 +20,10 @@ public class BooksController : ControllerBase
     {
         _bookRepository = bookRepository;
         _logger = logger;
-    } 
+    }
     #endregion
 
 
-    // GET: api/<BooksController>
     [ProducesResponseType(typeof(BookListViewModel), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     [HttpGet]
@@ -40,7 +40,6 @@ public class BooksController : ControllerBase
         return Ok(result);
     }
 
-    // GET api/<BooksController>/5
     [ProducesResponseType(typeof(BookViewModel), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     [HttpGet("{id}")]
@@ -57,22 +56,36 @@ public class BooksController : ControllerBase
         return Ok(result);
     }
 
-    // POST api/<BooksController>
-    [HttpPost]
-    public void Post([FromBody] string value)
+    [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+    [HttpPost("checkout")]
+    public async Task<ActionResult<bool>> Checkout([FromBody] BookCheckoutRequestModel model)
     {
+        var result = await _bookRepository.CheckoutBook(model);
+
+        if (!result)
+        {
+            _logger.LogError("Book can not checkedout!");
+            return BadRequest("Book can not checkedout!");
+        }
+
+        return Ok(result);
     }
 
-    // PUT api/<BooksController>/5
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+    [HttpPost("checkin")]
+    public async Task<ActionResult<bool>> Checkin([FromBody] BookCheckinRequestModel model)
     {
-    }
+        var result = await _bookRepository.CheckInBook(model);
 
-    // DELETE api/<BooksController>/5
-    [HttpDelete("{id}")]
-    public void Delete(int id)
-    {
+        if (!result)
+        {
+            _logger.LogError("Book can not checkedin!");
+            return BadRequest("Book can not checkedin!");
+        }
+
+        return Ok(result);
     }
 }
 
